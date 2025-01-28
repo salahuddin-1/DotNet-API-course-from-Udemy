@@ -88,3 +88,4 @@
 /Users/salahuddin/Developer/Dot Net Core/dotnet-course-code/DotnetAPI/bin/Debug/net8.0/System.Text.Json.dll
 /Users/salahuddin/Developer/Dot Net Core/dotnet-course-code/DotnetAPI/bin/Debug/net8.0/runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll
 /Users/salahuddin/Developer/Dot Net Core/dotnet-course-code/DotnetAPI/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/salahuddin/Developer/Dot Net Core/dotnet-course-code/DotnetAPI/obj/Debug/net8.0/DotnetAPI.sourcelink.json
