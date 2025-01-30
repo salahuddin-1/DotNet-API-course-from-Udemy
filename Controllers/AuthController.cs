@@ -115,6 +115,8 @@ public class AuthController(IConfiguration config) : ControllerBase
         int userId = _dapper.LoadDataSingle<int>(sql: sqlForUserId);
         string token = _authHelper.CreateToken(userId);
         Dictionary<string, string> dict = [];
+        dict.Add("userId", userId.ToString());
+        dict.Add("email", userForLoginDto.Email ?? "");
         dict.Add("token", token);
         return Ok(dict);
     }

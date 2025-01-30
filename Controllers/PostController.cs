@@ -16,7 +16,7 @@ public class PostController(IConfiguration config) : ControllerBase
 
 
     [HttpGet("GetPost")]
-    public IEnumerable<Post> GetPost(int postId)
+    public Post GetPost(int postId)
     {
         string sql = @$"SELECT [PostId],
                         [UserId],
@@ -26,7 +26,7 @@ public class PostController(IConfiguration config) : ControllerBase
                         [PostUpdate] 
                     FROM TutorialAppSchema.Posts
                     WHERE PostId = '{postId}'";
-        return _dapper.LoadData<Post>(sql);
+        return _dapper.LoadDataSingle<Post>(sql);
     }
 
     [HttpGet("GetPostsByUser")]
@@ -116,6 +116,17 @@ public class PostController(IConfiguration config) : ControllerBase
             return Ok();
         }
         throw new Exception("Failed to Delete Post");
+    }
+
+
+    [HttpGet("SearchByPost")]
+    public IEnumerable<Post> SearchByPost(string searchQuery)
+    {
+        string sql = @$"
+            SELECT * FROM TutorialAppSchema.Posts
+                WHERE PostContent LIKE '%{searchQuery}%'
+                OR PostTitle LIKE '%{searchQuery}%'";
+        return _dapper.LoadData<Post>(sql);
     }
 
 }
