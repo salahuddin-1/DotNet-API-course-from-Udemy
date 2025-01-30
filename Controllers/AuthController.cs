@@ -124,7 +124,7 @@ public class AuthController(IConfiguration config) : ControllerBase
     {
         // Extracts data from our Headers from our claims array
         // Here we are extracting userId
-        string userId = User.FindFirst("userId")?.Value ?? "";
+        string userId = this.User.FindFirst("userId")?.Value ?? "";
         string sqlForUserId = @$"
                 SELECT UserId FROM TutorialAppSchema.Users 
                     WHERE UserId = '{userId}'";
