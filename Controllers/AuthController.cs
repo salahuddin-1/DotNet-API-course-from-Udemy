@@ -43,18 +43,20 @@ public class AuthController(IConfiguration config) : ControllerBase
                         ) VALUES(" + sqlEmail + ", @PasswordHash, @PasswordSalt)";
 
                 List<SqlParameter> sqlParameters = [];
+                // PASSWORD SALT
                 SqlParameter passwordSaltParameter = new SqlParameter(
                    "@PasswordSalt",
                    SqlDbType.VarBinary
                );
                 passwordSaltParameter.Value = passwordSalt;
+                sqlParameters.Add(passwordSaltParameter);
+                // PASSWORD HASH
                 SqlParameter passwordHashParameter = new SqlParameter(
                     "@PasswordHash",
                     SqlDbType.VarBinary
                 );
                 passwordHashParameter.Value = passwordHash;
                 sqlParameters.Add(passwordHashParameter);
-                sqlParameters.Add(passwordSaltParameter);
                 if (_dapper.ExecuteSqlWithParameters(sql: sqlAddAuth, parameters: sqlParameters))
                 {
                     byte ACTIVE = 1;
