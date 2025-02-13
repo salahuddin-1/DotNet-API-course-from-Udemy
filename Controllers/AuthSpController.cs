@@ -34,7 +34,6 @@ public class AuthSpController(IConfiguration config) : ControllerBase
                 byte[] passwordSalt = _authHelper.GetPasswordSalt();
                 byte[] passwordHash = _authHelper.GetPasswordHash(userForRegistrationDto.Password ?? "",
                                          passwordSalt: passwordSalt);
-                string sqlEmail = "'" + userForRegistrationDto.Email + "'";
                 string sqlAddAuth = @"
                     EXEC TutorialAppSchema.spRegistration_Upsert
                         @Email = @EmailParam,

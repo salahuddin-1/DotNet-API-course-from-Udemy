@@ -47,16 +47,16 @@ namespace DotnetAPI.Data
 
         public bool ExecuteSqlWithParameters(string sql, List<SqlParameter> parameters)
         {
-            SqlCommand commandWithParams = new(sql);
+
+            SqlConnection dbConnection = new SqlConnection(
+                _config.GetConnectionString("DefaultConnection")
+            );
+            SqlCommand commandWithParams = new(sql, dbConnection);
             foreach (SqlParameter param in parameters)
             {
                 commandWithParams.Parameters.Add(param);
             }
-            SqlConnection dbConnection = new SqlConnection(
-                _config.GetConnectionString("DefaultConnection")
-            );
             dbConnection.Open();
-            commandWithParams.Connection = dbConnection;
             int rowsAffected = commandWithParams.ExecuteNonQuery();
             dbConnection.Close();
             return rowsAffected > 0;
