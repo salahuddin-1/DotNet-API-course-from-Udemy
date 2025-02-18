@@ -61,5 +61,22 @@ namespace DotnetAPI.Data
             dbConnection.Close();
             return rowsAffected > 0;
         }
+
+        public IEnumerable<T> LoadDataWithParameters<T>(string sql, DynamicParameters parameters)
+        {
+            IDbConnection dbConnection = new SqlConnection(
+                _config.GetConnectionString("DefaultConnection")
+            );
+            return dbConnection.Query<T>(sql, param: parameters);
+        }
+
+        public T? LoadDataSingleWithParameters<T>(string sql, DynamicParameters parameters)
+        {
+            IDbConnection dbConnection = new SqlConnection(
+                _config.GetConnectionString("DefaultConnection")
+            );
+            // QuerySingleOrDefault returns data or null, unlike the QuerySingle method
+            return dbConnection.QuerySingleOrDefault<T>(sql, param: parameters);
+        }
     }
 }
