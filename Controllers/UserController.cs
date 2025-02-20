@@ -1,3 +1,5 @@
+using System.Data;
+using Dapper;
 using DotnetAPI.Data;
 using DotnetAPI.Dtos;
 using DotnetAPI.Models;
@@ -102,6 +104,36 @@ namespace DotnetAPI.Controllers
             if (_dapper.ExecuteSql(sql))
             {
 
+                return Ok();
+            }
+            throw new Exception("Failed to add user");
+        }
+
+        [HttpPost("AddUserWithDynamicParameters")]
+        public IActionResult AddUserWithDynamicParameters(UserToAddDto user)
+        {
+            string sql = @"
+                INSERT INTO TutorialAppSchema.Users(
+                    [FirstName],
+                    [LastName],
+                    [Email],
+                    [Gender],
+                    [Active]
+                ) VALUES (
+                    @FirstNameParam,
+                    @LastNameParam,
+                    @EmailParam,
+                    @GenderParam,
+                    @ActiveParam
+                )";
+            DynamicParameters sqlParameters = new();
+            sqlParameters.Add("@FirstNameParam", user.FirstName, DbType.String);
+            sqlParameters.Add("@LastNameParam", user.LastName, DbType.String);
+            sqlParameters.Add("@EmailParam", user.Email, DbType.String);
+            sqlParameters.Add("@GenderParam", user.Gender, DbType.String);
+            sqlParameters.Add("@ActiveParam", user.Active, DbType.Boolean);
+            if (_dapper.ExecuteSqlWithDynamicParameters(sql, sqlParameters))
+            {
                 return Ok();
             }
             throw new Exception("Failed to add user");
